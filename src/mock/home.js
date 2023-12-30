@@ -13,7 +13,7 @@ export default {
       data: {
         userInfo: [
           {
-            name: 'Andy',
+            name: '管理员',
             age: Mock.Random.integer(0,130)
           },
         ]

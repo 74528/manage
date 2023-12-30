@@ -36,3 +36,4 @@ npm run lint
 # Hadoop
 # manage
 # manage
+# cpp-manage

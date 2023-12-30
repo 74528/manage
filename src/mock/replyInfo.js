@@ -4,7 +4,7 @@
  * 通常是在你的项目代码中手动导入的，因为 Mock 数据通常是项目特定的，
  * 而不是标准的第三方库。
  */
-import axios from 'axios';
+
 import Mock from 'mockjs'
 // get请求从config.url获取参数，reply从config.body中获取参数
 function parseURL(url) {
@@ -26,7 +26,7 @@ let data = Mock.mock({
   'replyInfo|100': [  
     {
       id: Mock.Random.id(), // 随机ID  
-      content: Mock.Random.sentence(3), // 随机句子  
+      content: '@ctitle', // 随机句子  
       like_count:'@integer(0,100)', // 随机点赞数  
       dislike_count:'@integer(0,100)', // 随机不喜欢数  
       reply_to: Mock.Random.id(), // 随机回复ID  
@@ -115,7 +115,7 @@ export default {
     status  
     } = JSON.parse(config.body)._value; // 从请求体中获取新增信息  
     data.replyInfo.unshift({
-      id: id || Mock.Random.id(), // 如果没有提供id，则生成随机id  
+      id: Mock.Random.guid(), // 如果没有提供id，则生成随机id  
       content: content,  
       like_count: like_count || 0, // 如果没有提供点赞数，则默认为0  
       dislike_count: dislike_count || 0, // 如果没有提供不喜欢数，则默认为0  

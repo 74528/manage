@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { index } from './stores/index'
+// 在 main.js 中全局引入 echarts
+// import echarts from "echarts";
+// Vue.prototype.$echarts = echarts;
 
 
 import App from './App.vue'

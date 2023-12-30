@@ -25,7 +25,7 @@ let data = Mock.mock({
   'postInfo|100': [  
     {  
       id: '@id', // 随机id  
-      title: '@title', // 随机标题  
+      title: '@ctitle', // 随机标题  
       send_time: '@datetime', // 随机发送时间  
       reply_count: '@integer(0, 100)', // 随机回复数量  
       max_level: '@integer(0,100)', // 随机等级  

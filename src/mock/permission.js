@@ -28,32 +28,39 @@ export default {
               },
               // 设置子级菜单路由
               {
-                label: '律师管理',
+                label: '用户管理',
                 icon: IconEpUserFilled,
                 children: [
                   {
-                    path: '/lawyerInfo',
-                    name: 'lawyerInfo',
-                    label: '律师信息',
-                    url: 'LawyerInfo/LawyerInfo'
+                    path: '/userInfo',
+                    name: 'userInfo',
+                    label: '用户信息',
+                    url: 'UseerInfo/UserInfo'
                   },
                   {
-                    path: '/lawyerReview',
-                    name: 'lawyerReview',
-                    label: '律师审核',
-                    url: 'LawyerReview/LawyerReview'
+                    path: '/reportInfo',
+                    name: 'reportInfo',
+                    label: '回复信息',
+                    url: 'ReportInfo/ReportInfo'
                   }
                 ]
               },
               {
-                label: '统计报表',
+                label: '信息管理',
                 icon: IconEpHistogram,
                 children: [
                   {
-                    path: '/orderReport',
-                    name: 'orderReport',
-                    label: '订单报表',
-                    url: 'OrderReport/OrderReport'
+                    path: '/repleInfo',
+                    name: 'repleInfo',
+                    label: '回复信息',
+                    url: 'RepleInfo/RepletInfo'
+                  }
+                  ,
+                  {
+                    path: '/postInfo',
+                    name: 'postInfo',
+                    label: '帖子信息',
+                    url: 'PostInfo/PostInfo'
                   }
                 ]
               },
@@ -62,10 +69,10 @@ export default {
                 icon: IconEpTools,
                 children: [
                   {
-                    path: '/user',
-                    name: 'user',
-                    label: '用户管理',
-                    url: 'User/User'
+                    path: '/chartInfo',
+                    name: 'chartInfo',
+                    label: '数据统计',
+                    url: 'ChartInfo/ChartInfo'
                   },
                   {
                     path: '/systemLog',

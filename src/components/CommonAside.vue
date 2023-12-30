@@ -121,11 +121,11 @@ const asideMenu = ref([
         name: 'userInfo',
         label: '用户信息'
       },
-      // {
-      //   path: '/lawyerReview',
-      //   name: 'lawyerReview',
-      //   label: '律师审核'
-      // }
+      {
+        path: '/reportInfo',
+        name: 'reportInfo',
+        label: '举报审核'
+      }
     ]
   },
   {
@@ -148,11 +148,11 @@ const asideMenu = ref([
     label: '系统管理',
     icon: IconEpTools,
     children: [
-      // {
-      //   path: '/user',
-      //   name: 'user',
-      //   label: '用户管理'
-      // },
+      {
+        path: '/analyseInfo',
+        name: 'analyseInfo',
+        label: '数据统计'
+      },
       {
         path: '/systemLog',
         name: 'systemLog',
@@ -175,8 +175,8 @@ const asideMenu = ref([
   justify-content: center;
   border: none;
   img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 30px;
     border-radius: 10px;
   }
 }

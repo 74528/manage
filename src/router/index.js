@@ -8,11 +8,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 //        这可以提高应用的性能，因为不会在初始加载时加载所有组件。
 const Main = () => import('@/views/Main.vue')
 const Home = () => import('@/views/Home/Home.vue')
-const UserInfo = () => import('@/views/Lawyer/UserInfo.vue')
-// const LawyerReview = () => import('@/views/Lawyer/LawyerReview.vue')
-const Login = () => import('@/views/Login/Login.vue')
-const PostInfo = () => import('@/views/Lawyer/PostInfo.vue')
-const ReplyInfo = () => import('@/views/Lawyer/ReplyInfo.vue')
+const UserInfo = () => import('@/views/Message/UserInfo.vue')
+const Login = () => import('@/views/Login/AdminLogin.vue')
+const PostInfo = () => import('@/views/Message/PostInfo.vue')
+const ReplyInfo = () => import('@/views/Message/ReplyInfo.vue')
+const ReportInfo = () => import('@/views/Message/ReportInfo.vue')
+const ChartInfo = () => import('@/views/Message/ChartInfo.vue')
+const PieInfo = () => import('@/views/Message/PieInfo.vue')
+const AnalyseInfo = () => import('@/views/Message/AnalyseInfo.vue')
 
 
 const router = createRouter({
@@ -37,11 +40,11 @@ const router = createRouter({
           name: 'userInfo',
           component: UserInfo
         },
-        // {
-        //   path: '/lawyerReview',
-        //   name: 'lawyerReview',
-        //   component: LawyerReview
-        // },
+        {
+          path: '/reportInfo',
+          name: 'reportInfo',
+          component: ReportInfo
+        },
         {
           path: '/postInfo',
           name: 'postInfo',
@@ -51,6 +54,21 @@ const router = createRouter({
           path: '/replyInfo',
           name: 'replyInfo',
           component: ReplyInfo
+        },
+        {
+          path: '/chartInfo',
+          name: 'chartInfo',
+          component: ChartInfo
+        },
+        {
+          path: '/pieInfo',
+          name: 'pieInfo',
+          component: PieInfo
+        },
+        {
+          path: '/analyseInfo',
+          name: 'analysetInfo',
+          component: AnalyseInfo
         }
       ]
     },
