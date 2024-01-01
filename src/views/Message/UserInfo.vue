@@ -90,7 +90,7 @@ const operateForm = ref({
   gender:'',
   intro:'',
   avater:'',
-  register_time:'',
+  registerTime:'',
   last_login_time:'',
   status:'',
   deleted:''
@@ -218,7 +218,7 @@ const tableLabel = ref([
      // prop属性对应兑现中的键名，即可填入数据
      prop: 'id',
     // 表格列名
-    label: '账号'
+    label: 'id'
   },
   {
     // prop属性对应兑现中的键名，即可填入数据
@@ -228,7 +228,7 @@ const tableLabel = ref([
   },
 
   {
-    prop: 'phone_number',
+    prop: 'phoneNumber',
     label: '手机号'
   },
   {
@@ -245,11 +245,11 @@ const tableLabel = ref([
     type:"image"
   },
   {
-    prop: 'register_time',
+    prop: 'registerTime',
     label: '注册时间'
   },
   {
-    prop: 'last_login_time',
+    prop: 'lastLoginTime',
     label: '上次登录时间'
   },
   {
@@ -317,32 +317,52 @@ const components = {
 // });
 // }
 
-const getUserInfoData = async (username="") => {
-  try {
-    //vue3中函数获取ref({})中的数据
-    config.loading = true
-    // @ts-ignore
-    const response = await axios.get('/userInfo/getUserInfoData', {
-      params: { page: config.page.value,username }
-    })
-    // @ts-ignore
-    //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
-    //通过 .value 属性来访问和修改它的值。
-    //asideMenu.value.filter((item) => item.children)
-    //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 UserInfo 数组中的每个元素，并为每个元素执行指定的操作。
-        tableData.value = response.data.userInfo.map((item) => {  
-      item.gender = item.gender === '男' ? '女' : '男'; // 确保性别是 '女' 或 '男'  
-      item.status = item.status === '可用' ? '封禁' : '可用'; // 确保状态是 '可用' 或 '封禁'  
-      return item;  
-    })  
-    // 总记录数
-    config.total = response.data.count
-    //设置分页数量，每页显示20条100条就是5页
-    config.count = response.data.userInfo.length
-    config.loading = false
-  } catch (error) {
-    console.error(error)
-  }
+// const getUserInfoData = async (username="") => {
+//   try {
+//     //vue3中函数获取ref({})中的数据
+//     config.loading = true
+//     // @ts-ignore
+//     const response = await axios.get('/userInfo/getUserInfoData', {
+//       params: { page: config.page.value,username }
+//     })
+//     // @ts-ignore
+//     //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
+//     //通过 .value 属性来访问和修改它的值。
+//     //asideMenu.value.filter((item) => item.children)
+//     //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 UserInfo 数组中的每个元素，并为每个元素执行指定的操作。
+//         tableData.value = response.data.userInfo.map((item) => {  
+//       item.gender = item.gender === '男' ? '女' : '男'; // 确保性别是 '女' 或 '男'  
+//       item.status = item.status === '可用' ? '封禁' : '可用'; // 确保状态是 '可用' 或 '封禁'  
+//       return item;
+//     })  
+//     // 总记录数
+//     config.total = response.data.count
+//     //设置分页数量，每页显示20条100条就是5页
+//     config.count = response.data.userInfo.length
+//     config.loading = false
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
+const getUserInfoData = async () => {
+    axios.get(`http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
+        if (resp.data.code === 0) {
+            console.log('success');
+            config.loading = true;
+            tableData.value = resp.data.data.map((item) => {
+                item.deleted = item.deleted === 0 ? '可用' : '注销';
+                item.status = item.status === 0 ? '正常' : '禁言';
+                return item;
+            });
+            config.total = resp.data.data.length;
+            config.loading = false;
+            // config.count = 
+        } else {
+            console.log('error');
+        }
+        console.log(resp.data);
+    });
 }
 
 // 在组件挂载时调用 getUserInfoData
