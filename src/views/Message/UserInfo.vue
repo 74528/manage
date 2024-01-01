@@ -351,8 +351,17 @@ const getUserInfoData = async () => {
             console.log('success');
             config.loading = true;
             tableData.value = resp.data.data.map((item) => {
-                item.deleted = item.deleted === 0 ? '可用' : '注销';
-                item.status = item.status === 0 ? '正常' : '禁言';
+                // item.status = item.deleted === 0 ? '正常' : '注销';
+                // item.status = item.status === 0 ? '正常' : '禁言';
+                if (item.deleted === 0) {
+                    if (item.status === 0) {
+                        item.status = '正常';
+                    } else {
+                        item.status = '禁言';
+                    }
+                } else {
+                    item.status = '注销';
+                }
                 return item;
             });
             config.total = resp.data.data.length;
