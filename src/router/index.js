@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // import replyInfo from '../mock/replyInfo'
 //静态导入:在模块加载时立即导入并执行。
 //        这对于常规的模块导入非常适用，例如导入常驻在应用中的组件。
+
 // import Main from '@/views/Main.vue'
 //动态导入:在需要的时候才加载模块，通常用于懒加载路由或按需加载组件。
 //        这可以提高应用的性能，因为不会在初始加载时加载所有组件。

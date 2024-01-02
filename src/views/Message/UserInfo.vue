@@ -19,7 +19,7 @@
       <el-button type="primary" @click="addUser">+ 新增</el-button>
       <common-form inline :formLabel="formLabel" :form="searchForm">
         <!-- <el-button type="primary" @click="getUserInfoData(searchForm.keyword)">搜索</el-button> -->
-        <el-button type="primary" @click="getUserInfoData()">搜索</el-button>
+        <el-button type="primary" @click="getUserInfoData(searchForm.keyword)">搜索</el-button>
       </common-form>
     </div>
     <!-- 使用 CommconTable -->
@@ -123,11 +123,11 @@ const operateFormLabel = ref([
     opts: [
       {
         label: '男',
-        value: true
+        value: '男'
       },
       {
         label: '女',
-        value: false
+        value: '女'
       }
     ]
   },
@@ -137,12 +137,14 @@ const operateFormLabel = ref([
     type: 'select',
     opts: [
       {
-        label: '可用',
-        value: true
+        label: '正常',
+        value: 0,
+        deleted : 0
       },
       {
         label: '封禁',
-        value: false
+        value: 1,
+        deleted : 0
       }
     ]
   }
@@ -317,32 +319,62 @@ const components = {
 // });
 // }
 
-const getUserInfoData = async (username="") => {
-  try {
-    //vue3中函数获取ref({})中的数据
-    config.loading = true
-    // @ts-ignore
-    const response = await axios.get('/userInfo/getUserInfoData', {
-      params: { page: config.page.value,username }
-    })
-    // @ts-ignore
-    //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
-    //通过 .value 属性来访问和修改它的值。
-    //asideMenu.value.filter((item) => item.children)
-    //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 UserInfo 数组中的每个元素，并为每个元素执行指定的操作。
-        tableData.value = response.data.userInfo.map((item) => {  
-      item.gender = item.gender === '男' ? '女' : '男'; // 确保性别是 '女' 或 '男'  
-      item.status = item.status === '可用' ? '封禁' : '可用'; // 确保状态是 '可用' 或 '封禁'  
-      return item;  
-    })  
-    // 总记录数
-    config.total = response.data.count
-    //设置分页数量，每页显示20条100条就是5页
-    config.count = response.data.userInfo.length
-    config.loading = false
-  } catch (error) {
-    console.error(error)
-  }
+// const getUserInfoData = async (username="") => {
+//   try {
+//     //vue3中函数获取ref({})中的数据
+//     config.loading = true
+//     // @ts-ignore
+//     const response = await axios.get('/userInfo/getUserInfoData', {
+//       params: { page: config.page.value,username }
+//     })
+//     // @ts-ignore
+//     //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
+//     //通过 .value 属性来访问和修改它的值。
+//     //asideMenu.value.filter((item) => item.children)
+//     //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 UserInfo 数组中的每个元素，并为每个元素执行指定的操作。
+//         tableData.value = response.data.userInfo.map((item) => {  
+//       item.gender = item.gender === '男' ? '女' : '男'; // 确保性别是 '女' 或 '男'  
+//       item.status = item.status === '可用' ? '封禁' : '可用'; // 确保状态是 '可用' 或 '封禁'  
+//       return item;  
+//     })  
+//     // 总记录数
+//     config.total = response.data.count
+//     //设置分页数量，每页显示20条100条就是5页
+//     config.count = response.data.userInfo.length
+//     config.loading = false
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
+
+const getUserInfoData = async () => {
+    axios.get(`http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
+        if (resp.data.code === 0) {
+            console.log('success');
+            config.loading = true;
+            tableData.value = resp.data.data.map((item) => {
+                // item.status = item.deleted === 0 ? '正常' : '注销';
+                // item.status = item.status === 0 ? '正常' : '禁言';
+                if (item.deleted === 0) {
+                    if (item.status === 0) {
+                        item.status = '正常';
+                    } else {
+                        item.status = '禁言';
+                    }
+                } else {
+                    item.status = '注销';
+                }
+                
+                return item;
+            });
+            config.total = resp.data.data.length;
+            config.loading = false;
+            // config.count = 
+        } else {
+            console.log('error');
+        }
+        console.log(resp.data);
+    });
 }
 
 // 在组件挂载时调用 getUserInfoData

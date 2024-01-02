@@ -1,9 +1,15 @@
+<!-- 用于创建一个表单 -->
+<!-- 依赖于从父组件传递下来的数据（如 formLabel）来动态生成表单项。这个子组件可以插入到任何父组件中，并根据父组件传递的数据来展示不同的表单元素 -->
 <template>
+  <!-- 具有动态生成的字段，这些字段的类型（如输入框、下拉框、开关、日期选择器或图片上传），根据传入的配置生成不同类型的输入控件 -->
   <el-form :inline="inline" :model="form" ref="form" label-width="100px">
+    <!-- 为每个元素创建一个表单项。每个表单项都有一个键（item.model）和标签（item.label） -->
     <el-form-item v-for="item in formLabel" :key="item.model" :label="item.label">
+      <!-- item.type 的值决定显示哪种输入控件 -->
       <!-- 输入框 -->
+      <!-- 双向数据绑定 -->
       <el-input
-        v-model="form[item.model]"
+        v-model="form[item.model]" 
         :placeholder="'请输入' + item.label"
         v-if="!item.type"
       ></el-input>
@@ -49,12 +55,16 @@
  * 父传子：通过props向子组件传递值
  */
 const props = defineProps({
-  inline: Boolean,
-  form: Object,
-  formLabel: Array
+  // props属性
+  inline: Boolean, //inline其类型是Boolean
+  form: Object,  //form 是一个对象
+  formLabel: Array  //formLabel 是一个数组
 })
 </script>
 
+<!-- 内联（Inline）通常指的是将一个函数或方法的代码直接插入到调用它的地方，
+  而不是进行常规的函数调用。这种做法可以减少函数调用的开销，提高执行效率，
+  但可能会增加代码的大小，因为函数的代码需要在每个调用点重复 -->
 
 <style lang="scss" scoped>
 .avatar-uploader .avatar {

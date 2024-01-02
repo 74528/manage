@@ -18,7 +18,7 @@
     <!-- 右边部分 -->
     <el-row class="block-col-2">
       <el-col :span="25">
-        <span style="color: white; margin: 20px">Andy</span>
+        <span style="color: white; margin: 20px">管理员</span>
         <el-dropdown>
           <span class="el-dropdown-link">
             <div class="user-img">

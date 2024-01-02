@@ -1,4 +1,6 @@
 <template>
+  <!-- 创建了一个具有两种类型的菜单项（有或没有二级菜单）的导航菜单。每个菜单项都有一个图标、标签文本和一个点击事件处理程序 -->
+  <!-- 菜单项配置 -->
   <el-menu
     active-text-color="#ffd04b"
     background-color="#545c64"
@@ -6,6 +8,7 @@
     text-color="#fff"
     :collapse="isCollapse"
   >
+  <!-- 菜单上方： Logo 和标题 -->
     <div class="logoIndex-img">
       <img :src="logoIndex" />
       <span style="margin: 10px">
@@ -13,12 +16,15 @@
       </span>
     </div>
     <!-- 配置没有二级菜单的菜单路由内容-->
+    <!-- 每个菜单项都有一个与其路径相关的索引。 -->
+    <!-- 通过 v-for 指令循环遍历 noChildren 数组，并为每个项目创建一个菜单项 -->
     <el-menu-item
       :index="item.path"
       v-for="item in noChildren"
       :key="item.path"
       @click="clickMenu(item)"
     >
+    <!-- 每个菜单项都有一个图标、标签文本和一个点击事件处理程序。 -->
       <el-icon>
         <!-- 固定写法 -->
         <!-- <i-ep-HomeFilled/> -->
@@ -28,6 +34,10 @@
       <span>{{ item.label }}</span>
     </el-menu-item>
     <!-- 配置有二级菜单的菜单路由内容-->
+    <!-- 创建具有子菜单的菜单项。
+      使用 v-for 指令循环遍历 hasChildren 数组。
+      每个子菜单都有一个标题，标题下方是子菜单项的集合。
+      子菜单项通过 <el-menu-item-group> 组件进行分组，并使用 <el-menu-item> 组件进行渲染。也有一个点击事件处理程序 -->
     <el-sub-menu :index="item.label" v-for="(item, index) in hasChildren" :key="index">
       <template #title>
         <el-icon>
@@ -65,24 +75,24 @@ const resolveIcon = (icon) => {
   switch (icon.name) {
     case 'ep-home-filled': //首页icon
       return IconEpHomeFilled
-    case 'ep-user-filled': //律师管理icon
+    case 'ep-user-filled': //icon
       return IconEpUserFilled
-    case 'ep-histogram':  //统计报表icon
+    case 'ep-histogram':  //icon
       return IconEpHistogram
-    case 'ep-tools':  //系统管理icon
+    case 'ep-tools':  //icon
       return IconEpTools
     default:
       return IconEpMenu // 默认图标
   }
 }
-
+//处理导航菜单的逻辑
 //Vue 3 中的 computed 函数来创建一个计算属性 noChildren。
 // 获取菜单对象中不包含子级的菜单
  const noChildren = computed(() => asideMenu.value.filter((item) => !item.children))
 // const noChildren = computed(() => index().menuInfo.filter((item) => !item.children))
 // 获取菜单对象中包含子级的菜单
 const hasChildren = computed(() => asideMenu.value.filter((item) => item.children))
-
+// index().isCollapse 的值发生变化，isCollapse 引用的值也会相应地更新，从而触发任何依赖于它的组件或代码段的重新渲染
 const isCollapse = ref(computed(() => index().isCollapse))
 //clickMenu方法获取用户点击左侧导航栏的item状态
 const clickMenu = (key) => {

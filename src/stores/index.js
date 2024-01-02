@@ -9,9 +9,11 @@
  * 是一个存储状态的地方，可以包含状态（state）、操作(action)和 getter(getters)。
 
  */
+// 状态管理，管理应用中菜单和标签的相关状态，包括菜单的显示和隐藏、标签的添加和删除
 import { defineStore } from 'pinia';
 // 布局设置
 export const index = defineStore('index', {
+  // 在store的state部分，定义了应用的状态，定义了几个状态变量
   state: () => ({
     token: '',
     isCollapse: false,
@@ -27,12 +29,15 @@ export const index = defineStore('index', {
       }
     ]
   }),
+  // 在store的actions部分，定义了可以改变状态的方法。这些方法通常用于处理异步操作或复杂逻辑
   actions: {
     setMenu(menu) {
+      // 设置`menuInfo`状态变量，并将新菜单存储在localStorage中
       this.menuInfo = menu
       localStorage.setItem("menu", JSON.stringify(menu))
     },
     clearMenu() {
+      // 清空`menuInfo`和`tabsList`状态变量。  
       this.menuInfo = []
       this.tabsList = []
     },
