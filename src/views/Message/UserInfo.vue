@@ -91,7 +91,7 @@ const operateForm = ref({
   gender:'',
   intro:'',
   avater:'',
-  register_time:'',
+  registerTime:'',
   last_login_time:'',
   status:'',
   deleted:''
@@ -147,11 +147,6 @@ const operateFormLabel = ref([
       }
     ]
   }
-  // {
-  //   model: 'createTime',
-  //   label: '注册时间',
-  //   type: 'date'
-  // }
 ])
 
 
@@ -218,43 +213,7 @@ const operateFormLabel = ref([
 //       })
 //     })
 // }
-const DelUser = (row: Object) => {
-  //打印纸组件发送编辑表格事件的行数据
-  // console.log('row=======>', row)
-  // @ts-ignore
-  ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning'
-  })
-    .then(() => {
-      //1. 请求删除接口，根据id删除用户信息
-      // @ts-ignore
-      let id = row.id
-      // @ts-ignore
-      axios
-        .get('/userInfo/del', {
-          params: { id }
-        })
-        .then((res) => {
-          
-          // console.log(res.data)//{code: 200, message: '删除成功'}
-          // @ts-ignore
-          ElMessage({
-            type: 'success',
-            message: '删除成功'
-          })
-          getUserInfoData()
-        })
-    })
-    .catch(() => {
-      // @ts-ignore
-      ElMessage({
-        type: 'info',
-        message: '删除失败'
-      })
-    })
-}
+
 //获取子组件传过来的单个用户信息
 const EditUser = (row: Object) => {
   //打印纸组件发送编辑表格事件的行数据
@@ -283,7 +242,7 @@ const tableLabel = ref([
      // prop属性对应兑现中的键名，即可填入数据
      prop: 'id',
     // 表格列名
-    label: '账号'
+    label: 'id'
   },
   {
     // prop属性对应兑现中的键名，即可填入数据
@@ -293,7 +252,7 @@ const tableLabel = ref([
   },
 
   {
-    prop: 'phone_number',
+    prop: 'phoneNumber',
     label: '手机号'
   },
   {
@@ -310,11 +269,11 @@ const tableLabel = ref([
     type:"image"
   },
   {
-    prop: 'register_time',
+    prop: 'registerTime',
     label: '注册时间'
   },
   {
-    prop: 'last_login_time',
+    prop: 'lastLoginTime',
     label: '上次登录时间'
   },
   {
@@ -408,8 +367,8 @@ const components = {
 //   } catch (error) {
 //     console.error(error)
 //   }
-// }
-// http://localhost:8080/admin/user/search?username=sky&pageNum=1&pageSize=undefined
+// } 
+
 const getUserInfoData = (username) => {
   console.log(config);
   const url = username ? 
