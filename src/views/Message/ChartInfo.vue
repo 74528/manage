@@ -1,3 +1,6 @@
+<!-- 帮助管理员了解不同区域的内容更新频率和趋势，
+从而判断哪些板块最受用户关注，
+哪些可能存在冷淡或缺乏内容的情况。这对于调整社区运营策略、优化内容推荐机制至关重要。 -->
 <template>
   <div>
     <select v-model="selectedArea" @change="updateChart">
