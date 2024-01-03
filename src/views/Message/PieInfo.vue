@@ -1,3 +1,4 @@
+<!-- 这些数据可以反映用户的参与热情、粘性及社区的整体健康状况。 -->
 <template>  
     <div id="test2"></div>  
   </template>  
