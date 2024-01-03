@@ -20,6 +20,7 @@
       <common-form inline :formLabel="formLabel" :form="searchForm">
         <!-- <el-button type="primary" @click="getUserInfoData(searchForm.keyword)">搜索</el-button> -->
         <el-button type="primary" @click="getUserInfoData(searchForm.keyword)">搜索</el-button>
+     
       </common-form>
     </div>
     <!-- 使用 CommconTable -->
@@ -138,13 +139,11 @@ const operateFormLabel = ref([
     opts: [
       {
         label: '正常',
-        value: 0,
-        deleted : 0
+        value: '0'
       },
       {
         label: '封禁',
-        value: 1,
-        deleted : 0
+        value: '1'
       }
     ]
   }
@@ -154,7 +153,71 @@ const operateFormLabel = ref([
   //   type: 'date'
   // }
 ])
+
+
+
+
+// const searchUserInfoData = async (username) => {
+//   try {
+//     const response = await axios.get(`http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${config.total.value}`);
+
+//     if (response.data.code === 0) {
+//       console.log('success');
+//       config.loading = true;
+//       tableData.value = response.data.data.filter((item) => item.username === username);
+//       // 如果需要，针对搜索结果更新搜索相关的分页计数器
+//       config.total.value = tableData.value.length;
+//       config.loading = false;
+//     } else {
+//       console.error('Server error:', response.data.message || 'Unknown error');
+//       throw new Error(response.data.message || 'Unknown error');
+//     }
+//   } catch (error) {
+//     console.error('An error occurred:', error);
+//     // 可能的恢复操作，如重新加载、提示用户等
+//     // ...
+//     return Promise.reject(error);
+//   }
+// };
+
 // 删除
+// const DelUser = (row: Object) => {
+//   //打印纸组件发送编辑表格事件的行数据
+//   // console.log('row=======>', row)
+//   // @ts-ignore
+//   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
+//     confirmButtonText: '确定',
+//     cancelButtonText: '取消',
+//     type: 'warning'
+//   })
+//     .then(() => {
+//       //1. 请求删除接口，根据id删除用户信息
+//       // @ts-ignore
+//       let id = row.id
+//       // @ts-ignore
+//       axios
+//         .get('/userInfo/del', {
+//           params: { id }
+//         })
+//         .then((res) => {
+          
+//           // console.log(res.data)//{code: 200, message: '删除成功'}
+//           // @ts-ignore
+//           ElMessage({
+//             type: 'success',
+//             message: '删除成功'
+//           })
+//           getUserInfoData()
+//         })
+//     })
+//     .catch(() => {
+//       // @ts-ignore
+//       ElMessage({
+//         type: 'info',
+//         message: '删除失败'
+//       })
+//     })
+// }
 const DelUser = (row: Object) => {
   //打印纸组件发送编辑表格事件的行数据
   // console.log('row=======>', row)
@@ -346,9 +409,13 @@ const components = {
 //     console.error(error)
 //   }
 // }
-
-const getUserInfoData = async () => {
-    axios.get(`http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
+// http://localhost:8080/admin/user/search?username=sky&pageNum=1&pageSize=undefined
+const getUserInfoData = (username) => {
+  console.log(config);
+  const url = username ? 
+      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${config.total}` :
+      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`;
+    axios.get(url).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
             config.loading = true;

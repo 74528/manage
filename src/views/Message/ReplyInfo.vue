@@ -121,10 +121,21 @@
     model: 'floor_id',  
     label: '楼层ID'  
   },  
-  {  
-    model: 'status',  
-    label: '状态'  
-  }  
+  {
+    model: 'status',
+    label: '状态',
+    type: 'select',
+    opts: [
+      {
+        label: '正常',
+        value: 'true'
+      },
+      {
+        label: '封禁',
+        value: 'false'
+      }
+    ]
+  } 
    
   ])
   // 删除

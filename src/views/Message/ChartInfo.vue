@@ -35,18 +35,17 @@ export default {
         }]  
       });  
     },  
-    generateMockData() {  
-      const topics = ['话题A', '话题B', '话题C', '话题D', '话题E'];  
-      const randomData = [];  
-      for (let i = 0; i < 5; i++) {  
-        const randomIndex = Math.floor(Math.random() * topics.length);  
-        randomData.push({  
-          name: topics[randomIndex],  
-          value: Math.floor(Math.random() * 10) + 1 // 随机生成100-1000的数值  
-        });  
-      }  
-      return randomData;  
-    }  
-  }  
-};  
-</script>
+    generateMockData() {
+      const fixedTopics = ['话题A', '话题B', '话题C', '话题D', '话题E']; // 定义固定的5个话题数组
+
+      // 按照固定话题数组的顺序，为每个话题生成一个随机的帖子数
+      const dataWithFixedTopics = fixedTopics.map((topic, index) => ({
+        name: topic,
+        value: Math.floor(Math.random() * 10) + 1 // 随机生成1到10的数值（根据需求调整范围）
+      }));
+
+      return dataWithFixedTopics;
+    }
+  }
+};
+    </script>

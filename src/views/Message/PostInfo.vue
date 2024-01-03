@@ -123,11 +123,11 @@ const operateFormLabel = ref([
     opts: [
       {
         label: '讨论区',
-        value: true
+        value: 0
       },
       {
         label: '专业区',
-        value: false
+        value: 1
       }
     ]
   },
@@ -142,11 +142,11 @@ const operateFormLabel = ref([
     opts: [
       {
         label: '可用',
-        value: true
+        value: 0
       },
       {
         label: '封禁',
-        value: false
+        value: 1
       }
     ]
   },

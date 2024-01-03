@@ -1,3 +1,4 @@
+<!-- 展示标签页导航。 -->
 <template>
   <div class="tabs">
     <el-tag

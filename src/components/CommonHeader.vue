@@ -1,9 +1,11 @@
+<!-- 页面头部布局 -->
 <template>
   <header>
     <!-- 左边部分 -->
     <div class="l-content">
       <!--回弹按钮-->
       <el-icon class="iconbutton" :size="25" @click="toggerCollapse">
+        <!-- 监听点击事件来切换导航栏的折叠状态 -->
         <i-ep-Fold v-if="!state.isCollapse" />
         <i-ep-Expand v-else />
       </el-icon>
@@ -26,6 +28,7 @@
               <img :src="userAvatar" />
             </div>
           </span>
+          <!-- 鼠标悬浮时展示下拉菜单 -->
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item :icon="Avatar">个人信息</el-dropdown-item>
@@ -65,6 +68,7 @@ const toggerCollapse = () => {
     reactive参数必须是对象(json/arr)
  */
 // @ts-ignore  这里去掉会报ts语法检查错误
+// eslint-disable-next-line no-undef
 const state = reactive({
   // @ts-ignore  这里去掉会报ts语法检查错误
   menuInfo: computed(() => index().menuInfo),
