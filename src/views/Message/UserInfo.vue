@@ -153,7 +153,8 @@ const operateFormLabel = ref([
 // 删除
 const DelUser = (row) => {
   //打印纸组件发送编辑表格事件的行数据
-  console.log('row=======>', row.id)
+  console.log('C=======>', row.id),
+
   // @ts-ignore
   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
     confirmButtonText: '确定',
@@ -165,33 +166,22 @@ const DelUser = (row) => {
       // @ts-ignore
     
       // @ts-ignore
-        axios.put(`http://localhost:8080/admin/user/delete?id=${row.id}`)
+        axios.delete(`http://localhost:8080/admin/user/delete?id=${row.id}`)
         .then((res) => {
-          if (res.data.code === 0) {
-            ElMessage({
-              type: 'success',
-              message: '注销成功'
-            })
+          if (res.data.code === 0) { 
+            alert("注销成功！")
             getUserInfoData()
+           
           } else {
-            ElMessage({
-              type: 'error',
-              message: res.data.message || '注销失败'
-            })
+            alert("注销失败！")
           }
         })
         .catch(() => {
-          ElMessage({
-            type: 'info',
-            message: '网络错误，请稍后重试'
-          })
+          alert("网络错误请重试")
         })
     })
     .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '已取消删除'
-      })
+      alert("已取消删除。")
     })
 }
           
@@ -309,10 +299,17 @@ const components = {
 //调用用户测试信息数据
 
 const getUserInfoData = (username) => {
+  let number;
+  if (typeof config.total === 'object' && typeof config.total.value !== 'undefined') {
+    // 如果config.total是对象且有value属性
+    number = config.total.value;
+   } else if (typeof config.total === 'number') {
+    // 如果config.total是数字
+    number = config.total;}
   console.log(config);
   const url = username ? 
-      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${config.total}` :
-      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`;
+      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
+      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${number}`;
     axios.get(url).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
