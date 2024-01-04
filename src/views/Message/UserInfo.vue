@@ -46,7 +46,7 @@ import CommonTable from '../../components/CommonTable.vue'
 import {ref} from 'vue'
 import axios from 'axios';
 import { response } from 'express';
-import { messageConfig } from 'element-plus';
+import { ElMessage, messageConfig } from 'element-plus';
 
 // 打开新增用户窗口
 const addUser = () => {
@@ -151,9 +151,9 @@ const operateFormLabel = ref([
 
 
 // 删除
-const DelUser = (row: Object) => {
+const DelUser = (row) => {
   //打印纸组件发送编辑表格事件的行数据
-  // console.log('row=======>', row)
+  console.log('row=======>', row.id)
   // @ts-ignore
   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
     confirmButtonText: '确定',
@@ -163,31 +163,55 @@ const DelUser = (row: Object) => {
     .then(() => {
       //1. 请求删除接口，根据id删除用户信息
       // @ts-ignore
-      let id = row.id
+    
       // @ts-ignore
-      axios
-        .get('/userInfo/del', {
-          params: { id }
-        })
+        axios.put(`http://localhost:8080/admin/user/delete?id=${row.id}`)
         .then((res) => {
-          
-          // console.log(res.data)//{code: 200, message: '删除成功'}
-          // @ts-ignore
+          if (res.data.code === 0) {
+            ElMessage({
+              type: 'success',
+              message: '注销成功'
+            })
+            getUserInfoData()
+          } else {
+            ElMessage({
+              type: 'error',
+              message: res.data.message || '注销失败'
+            })
+          }
+        })
+        .catch(() => {
           ElMessage({
-            type: 'success',
-            message: '删除成功'
+            type: 'info',
+            message: '网络错误，请稍后重试'
           })
-          getUserInfoData()
         })
     })
     .catch(() => {
-      // @ts-ignore
       ElMessage({
         type: 'info',
-        message: '删除失败'
+        message: '已取消删除'
       })
     })
 }
+          
+//           // console.log(res.data)//{code: 200, message: '删除成功'}
+//           // @ts-ignore
+//           ElMessage({
+//             type: 'success',
+//             message: '删除成功'
+//           })
+//           getUserInfoData()
+//         })
+//     })
+//     .catch(() => {
+//       // @ts-ignore
+//       ElMessage({
+//         type: 'info',
+//         message: '删除失败'
+//       })
+//     })
+// }
 
 //获取子组件传过来的单个用户信息
 const EditUser = (row: Object) => {
