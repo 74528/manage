@@ -306,6 +306,8 @@ const getUserInfoData = (username) => {
    } else if (typeof config.total === 'number') {
     // 如果config.total是数字
     number = config.total;}
+      
+ 
   console.log(config);
   const url = username ? 
       `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
@@ -313,6 +315,8 @@ const getUserInfoData = (username) => {
     axios.get(url).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
+
+
             config.loading = true;
             tableData.value = resp.data.data.map((item) => {
                 // item.status = item.deleted === 0 ? '正常' : '注销';
