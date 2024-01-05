@@ -186,43 +186,7 @@ const DelPost = (row: Object) => {
       alert("已取消删除。")
     })
 }
-// 删除
-// const DelPost = (row: Object) => {
-//   //打印纸组件发送编辑表格事件的行数据
-//   // console.log('row=======>', row)
-//   // @ts-ignore
-//   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
-//     confirmButtonText: '确定',
-//     cancelButtonText: '取消',
-//     type: 'warning'
-//   })
-//     .then(() => {
-//       //1. 请求删除接口，根据id删除帖子信息
-//       // @ts-ignore
-//       let id = row.id
-//       // @ts-ignore
-//       axios
-//         .get('/postInfo/del', {
-//           params: { id }
-//         })
-//         .then((res) => {
-//           // console.log(res.data)//{code: 200, message: '删除成功'}
-//           // @ts-ignore
-//           ElMessage({
-//             type: 'success',
-//             message: '删除成功'
-//           })
-//           getPostInfoData()
-//         })
-//     })
-//     .catch(() => {
-//       // @ts-ignore
-//       ElMessage({
-//         type: 'info',
-//         message: '删除失败'
-//       })
-//     })
-// }
+
 //获取子组件传过来的单个帖子信息
 const EditPost = (row: Object) => {
   //打印纸组件发送编辑表格事件的行数据
@@ -330,8 +294,7 @@ const getPostInfoData = async () => {
             console.log('success');
             config.loading = true;
             tableData.value = resp.data.data.map((item) => {
-                // item.status = item.deleted === 0 ? '正常' : '注销';
-                // item.status = item.status === 0 ? '正常' : '禁言';
+                
                     if (item.status === 0) {
                         item.status = '正常';
                     } else {
