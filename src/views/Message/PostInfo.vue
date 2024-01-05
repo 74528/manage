@@ -282,35 +282,6 @@ const components = {
   CommonForm
 }
 //调用帖子测试信息数据
-// const getPostInfoData = async (id="") => {
-//   try {
-//     //vue3中函数获取ref({})中的数据
-//     config.loading = true
-//     // @ts-ignore
-//     const response = await axios.get('/postInfo/getPostInfoData', {
-//       params: { page: config.page.value,id }
-//     })
-//     // @ts-ignore
-//     //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
-//     //通过 .value 属性来访问和修改它的值。
-//     //asideMenu.value.filter((item) => item.children)
-//     //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 lawyerInfo 数组中的每个元素，并为每个元素执行指定的操作。
-   
-//     tableData.value = response.data.postInfo.map((item) => {
-//       item.status = item.status === true ? '可用' : '封禁',
-//       item.category = item.category === true ? '讨论区' : '专业区'
-//       return item
-//     }),
-   
-//     // 总记录数
-//     config.total = response.data.count
-//     //设置分页数量，每页显示20条100条就是5页
-//     config.count = response.data.postInfo.length
-//     config.loading = false
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
 const getPostInfoData = async () => {
     axios.get(`http://localhost:8080/admin/post/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
         if (resp.data.code === 0) {
