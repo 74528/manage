@@ -287,7 +287,7 @@
                     }else{
                       item.status = '不接受';
                     }
-                item.category = item.category === 0 ? '讨论区' : '专业区'
+                    item.category = item.category === 0 ? '主题帖' : '回复贴'
                 item.reason = item.reason === 0 ? '违反法律法规' : '违反论坛规定'
                 return item;
             });
