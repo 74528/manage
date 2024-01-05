@@ -165,7 +165,7 @@ const DelUser = (row) => {
       // @ts-ignore
     
       // @ts-ignore
-        axios.put(`http://localhost:8080/admin/user/delete?id=${row.id}`)
+        axios.delete(`http://localhost:8080/admin/user/delete?id=${row.id}`)
         .then((res) => {
           if (res.data.code === 0) {
             ElMessage({
