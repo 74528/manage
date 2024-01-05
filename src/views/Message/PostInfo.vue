@@ -152,43 +152,76 @@ const operateFormLabel = ref([
   },
  
 ])
-// 删除
-const DelPost = (row: Object) => {
+const DelPost = (row) => {
   //打印纸组件发送编辑表格事件的行数据
-  // console.log('row=======>', row)
+  console.log('C=======>', row.id),
+
   // @ts-ignore
-  ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
+  ElMessageBox.confirm('此操作将删除该帖子,是否继续?', '提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
     type: 'warning'
   })
     .then(() => {
-      //1. 请求删除接口，根据id删除帖子信息
+      //1. 请求删除接口，根据id删除用户信息
       // @ts-ignore
-      let id = row.id
+    
       // @ts-ignore
-      axios
-        .get('/postInfo/del', {
-          params: { id }
-        })
+        axios.delete(`http://localhost:8080/admin/post/delete?id=${row.id}`)
         .then((res) => {
-          // console.log(res.data)//{code: 200, message: '删除成功'}
-          // @ts-ignore
-          ElMessage({
-            type: 'success',
-            message: '删除成功'
-          })
-          getPostInfoData()
+          if (res.data.code === 0) { 
+            alert("注销成功！")
+            getPostInfoData()
+           
+          } else {
+            alert("注销失败！")
+          }
+        })
+        .catch(() => {
+          alert("网络错误请重试")
         })
     })
     .catch(() => {
-      // @ts-ignore
-      ElMessage({
-        type: 'info',
-        message: '删除失败'
-      })
+      alert("已取消删除。")
     })
 }
+// 删除
+// const DelPost = (row: Object) => {
+//   //打印纸组件发送编辑表格事件的行数据
+//   // console.log('row=======>', row)
+//   // @ts-ignore
+//   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
+//     confirmButtonText: '确定',
+//     cancelButtonText: '取消',
+//     type: 'warning'
+//   })
+//     .then(() => {
+//       //1. 请求删除接口，根据id删除帖子信息
+//       // @ts-ignore
+//       let id = row.id
+//       // @ts-ignore
+//       axios
+//         .get('/postInfo/del', {
+//           params: { id }
+//         })
+//         .then((res) => {
+//           // console.log(res.data)//{code: 200, message: '删除成功'}
+//           // @ts-ignore
+//           ElMessage({
+//             type: 'success',
+//             message: '删除成功'
+//           })
+//           getPostInfoData()
+//         })
+//     })
+//     .catch(() => {
+//       // @ts-ignore
+//       ElMessage({
+//         type: 'info',
+//         message: '删除失败'
+//       })
+//     })
+// }
 //获取子组件传过来的单个帖子信息
 const EditPost = (row: Object) => {
   //打印纸组件发送编辑表格事件的行数据
@@ -283,7 +316,15 @@ const components = {
 }
 //调用帖子测试信息数据
 const getPostInfoData = async () => {
-    axios.get(`http://localhost:8080/admin/post/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
+  let number;
+  if (typeof config.total === 'object' && typeof config.total.value !== 'undefined') {
+    // 如果config.total是对象且有value属性
+    number = config.total.value;
+   } else if (typeof config.total === 'number') {
+    // 如果config.total是数字
+    number = config.total;}
+
+    axios.get(`http://localhost:8080/admin/post/all?pageNum=${config.page.value}&pageSize=${number}`).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
             config.loading = true;
@@ -293,7 +334,7 @@ const getPostInfoData = async () => {
                     if (item.status === 0) {
                         item.status = '正常';
                     } else {
-                        item.status = '禁言';
+                        item.status = '删除';
                     } 
                 item.category = item.category === 0 ? '讨论区' : '专业区'
                 return item;
