@@ -271,34 +271,6 @@
     CommonForm
   }
   // 调用举报测试信息数据
-  // const getReportInfoData = async (id="") => {
-  //   try {
-  //     //vue3中函数获取ref({})中的数据
-  //     config.loading = true
-  //     // @ts-ignore
-  //     const response = await axios.get('/reportInfo/getReportInfoData', {
-  //       params: { page: config.page.value,id }
-  //     })
-  //     // @ts-ignore
-  //     //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
-  //     //通过 .value 属性来访问和修改它的值。
-  //     //asideMenu.value.filter((item) => item.children)
-  //     //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 lawyerInfo 数组中的每个元素，并为每个元素执行指定的操作。
-     
-  //     tableData.value = response.data.reportInfo.map((item) => {
-  //       item.status = item.status === true ? '可用' : '封禁',
-  //       item.category = item.category === true ? '讨论区' : '专业区'
-  //       return item
-  //     })
-  //     // 总记录数
-  //     config.total = response.data.count
-  //     //设置分页数量，每页显示20条100条就是5页
-  //     config.count = response.data.reportInfo.length
-  //     config.loading = false
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
   const getReportInfoData = async () => {
     axios.get(`http://localhost:8080/admin/report/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
         if (resp.data.code === 0) {
@@ -309,11 +281,14 @@
                 // item.status = item.status === 0 ? '正常' : '禁言';
               
                     if (item.status === 0) {
-                        item.status = '正常';
-                    } else {
-                        item.status = '禁言';
+                        item.status = '未处理';
+                    } else if(item.status === 1) {
+                        item.status = '处理完成';
+                    }else{
+                      item.status = '不接受';
                     }
                 item.category = item.category === 0 ? '讨论区' : '专业区'
+                item.reason = item.reason === 0 ? '违反法律法规' : '违反论坛规定'
                 return item;
             });
             config.total = resp.data.data.length;
