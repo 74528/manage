@@ -52,6 +52,7 @@
           <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
+       
       </el-table-column>
     </el-table>
     <!-- 
@@ -71,6 +72,7 @@
 </template>
 
 <script lang='ts' setup>
+
 /**
  * const props = defineProps({ ... })
  * 是在 Vue 3 的 <script setup> 区块中
@@ -80,8 +82,10 @@
 const props = defineProps({
   tableData: Array,
   tableLabel: Array,
-  config: Object
+  config: Object,
+
 })
+
 // defineEmits 函数来定义和获取父组件传递给子组件的自定义事件。
 // 它的作用是为子组件声明可以触发的事件，以便子组件可以正确地与父组件通信。
 const emit = defineEmits<{
