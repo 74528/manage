@@ -1,15 +1,14 @@
+<!-- 用于展示数据列表的组件，构建了一个表格和分页器。组件接收来自父组件的props，并通过事件向父组件传递操作信息 -->
 <template>
   <div class="common-table">
-    <!-- 
-      将表格数据tableData赋值给data 
-        -stripe：斑马纹显示表格
-    -->
+    <!-- 将表格数据tableData赋值给data  -stripe：斑马纹显示表格-->
+    <!-- 展示表格数据，数据源是父组件传入的tableData数组 -->
     <el-table :data="tableData" height="90%" stripe v-loading="config.loading">
       <!-- 表格第一列序号 -->
       <el-table-column label="序号" width="65">
         <template #default="scope">
           <!-- 
-            设置序号
+            设置序号，依据当前页数和行索引
               -  (config.page - 1) * 20 ：获取当前页数，每页20条
               - scope.$index + 1：设置序号
           -->
@@ -52,6 +51,7 @@
           <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
           <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
+       
       </el-table-column>
     </el-table>
     <!-- 
@@ -81,8 +81,10 @@
 const props = defineProps({
   tableData: Array,
   tableLabel: Array,
-  config: Object
+  config: Object,
+
 })
+
 // defineEmits 函数来定义和获取父组件传递给子组件的自定义事件。
 // 它的作用是为子组件声明可以触发的事件，以便子组件可以正确地与父组件通信。
 const emit = defineEmits<{

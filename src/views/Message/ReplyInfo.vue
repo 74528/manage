@@ -39,6 +39,7 @@
   import CommonForm from '../../components/CommonForm.vue'
   // @ts-ignore
   import CommonTable from '../../components/CommonTable.vue'
+  import axios from 'axios';
   // 打开新增回复窗口
   const addReply = () => {
     operateForm.value = {} //清空表单
@@ -216,8 +217,12 @@
     label: '不喜欢数'  
   },  
   {  
-    prop: 'postId',  
-    label: '回复至'  
+    prop: 'level',  
+    label: '楼层'  
+  },  
+  {  
+    prop: 'replyCount',  
+    label: '回复数'  
   },  
   {  
     prop: 'sendTime',  
@@ -228,8 +233,8 @@
     label: '发送者ID'  
   },  
   {  
-    prop: 'level',  
-    label: '楼层号'  
+    prop: 'postId',  
+    label: '帖子ID'  
   },  
   {  
     prop: 'status',  

@@ -13,6 +13,14 @@
         :placeholder="'请输入' + item.label"
         v-if="!item.type"
       ></el-input>
+ <!-- 不修改数据 -->
+      <el-input
+        v-model="form[item.model]" 
+        :placeholder="'请输入' + item.label"
+        :readonly="true"
+        v-if="item.type==='text'"
+        class="no-border-input"
+      ></el-input>
       <!-- 下拉框 -->
       <el-select v-model="form[item.model]" placeholder="请选择" v-if="item.type === 'select'">
         <el-option
@@ -72,6 +80,7 @@ const props = defineProps({
   height: 90px;
   display: block;
 }
+
 </style>
 
 <style>
@@ -95,4 +104,5 @@ const props = defineProps({
   height: 90px;
   text-align: center;
 }
+
 </style>

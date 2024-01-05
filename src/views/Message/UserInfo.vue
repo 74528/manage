@@ -90,7 +90,7 @@ const operateForm = ref({
   phoneNumber:'',
   gender:'',
   intro:'',
-  avater:'',
+  // avater:'',
   registerTime:'',
   lastLoginTime:'',
   status:'',
@@ -101,17 +101,19 @@ const operateForm = ref({
 const operateFormLabel = ref([
 {
     model: 'id',
-    label: '账号'
+    label: '账号',
+    type:'text'
   },
   {
     model: 'username',
-    label: '昵称'
+    label: '昵称',
+    type:'text'
   },
-   {
-    model: 'avatar',
-    label: '头像',
-    type: 'image'
-  },
+  //  {
+  //   model: 'avatar',
+  //   label: '头像',
+  //   type: 'image'
+  // },
   {
     model: 'phoneNumber',
     label: '手机号'
@@ -131,6 +133,10 @@ const operateFormLabel = ref([
         value: '女'
       }
     ]
+  },
+  {
+    model: 'intro',
+    label: '个人简介'
   },
   {
     model: 'status',
@@ -153,7 +159,8 @@ const operateFormLabel = ref([
 // 删除
 const DelUser = (row) => {
   //打印纸组件发送编辑表格事件的行数据
-  console.log('row=======>', row.id)
+  console.log('C=======>', row.id),
+
   // @ts-ignore
   ElMessageBox.confirm('此操作将永久删除该用户,是否继续?', '提示', {
     confirmButtonText: '确定',
@@ -167,51 +174,23 @@ const DelUser = (row) => {
       // @ts-ignore
         axios.delete(`http://localhost:8080/admin/user/delete?id=${row.id}`)
         .then((res) => {
-          if (res.data.code === 0) {
-            ElMessage({
-              type: 'success',
-              message: '注销成功'
-            })
+          if (res.data.code === 0) { 
+            alert("注销成功！")
             getUserInfoData()
+           
           } else {
-            ElMessage({
-              type: 'error',
-              message: res.data.message || '注销失败'
-            })
+            alert("注销失败！")
           }
         })
         .catch(() => {
-          ElMessage({
-            type: 'info',
-            message: '网络错误，请稍后重试'
-          })
+          alert("网络错误请重试")
         })
     })
     .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '已取消删除'
-      })
+      alert("已取消删除。")
     })
 }
-          
-//           // console.log(res.data)//{code: 200, message: '删除成功'}
-//           // @ts-ignore
-//           ElMessage({
-//             type: 'success',
-//             message: '删除成功'
-//           })
-//           getUserInfoData()
-//         })
-//     })
-//     .catch(() => {
-//       // @ts-ignore
-//       ElMessage({
-//         type: 'info',
-//         message: '删除失败'
-//       })
-//     })
-// }
+
 
 //获取子组件传过来的单个用户信息
 const EditUser = (row: Object) => {
@@ -259,10 +238,15 @@ const tableLabel = ref([
     label: '性别'
   },
   {
-    prop: 'avatar',
-    label: '头像',
-    type:"image"
+    prop: 'intro',
+    label: '个人简介'
   },
+
+  // {
+  //   prop: 'avatar',
+  //   label: '头像',
+  //   type:"image"
+  // },
   {
     prop: 'registerTime',
     label: '注册时间'
@@ -309,13 +293,24 @@ const components = {
 //调用用户测试信息数据
 
 const getUserInfoData = (username) => {
+  let number;
+  if (typeof config.total === 'object' && typeof config.total.value !== 'undefined') {
+    // 如果config.total是对象且有value属性
+    number = config.total.value;
+   } else if (typeof config.total === 'number') {
+    // 如果config.total是数字
+    number = config.total;}
+      
+ 
   console.log(config);
   const url = username ? 
-      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${config.total}` :
-      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${config.total.value}`;
+      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
+      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${number}`;
     axios.get(url).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
+
+
             config.loading = true;
             tableData.value = resp.data.data.map((item) => {
                 // item.status = item.deleted === 0 ? '正常' : '注销';
