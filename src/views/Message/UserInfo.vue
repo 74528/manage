@@ -61,8 +61,23 @@ const confirm = async () => {
   if (operateType.value === 'edit') {
     // 如果操作类型是修改
     // @ts-ignore
-    const response = await axios.post('/userInfo/edit', operateForm)
+    // const response = await axios.post('/userInfo/edit', operateForm)
     // console.log('response=====>', response)
+
+    await axios.put('http://localhost:8080/user/update', {
+        id: operateForm.value.id,
+        phoneNumber: operateForm.value.phoneNumber,
+        gender: operateForm.value.gender,
+        intro: operateForm.value.intro,
+        status: operateForm.value.status
+    }).then((resp) => {
+        if (resp.data.code === 0) {
+            console.log('succes');
+        } else {
+            console.log('error');
+        }
+    });
+
   } else {
     // 否则就是新增
     // @ts-ignore
