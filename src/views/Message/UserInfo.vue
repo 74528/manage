@@ -90,7 +90,7 @@ const operateForm = ref({
   phoneNumber:'',
   gender:'',
   intro:'',
-  avater:'',
+  // avater:'',
   registerTime:'',
   lastLoginTime:'',
   status:'',
@@ -101,17 +101,19 @@ const operateForm = ref({
 const operateFormLabel = ref([
 {
     model: 'id',
-    label: '账号'
+    label: '账号',
+    type:'text'
   },
   {
     model: 'username',
-    label: '昵称'
+    label: '昵称',
+    type:'text'
   },
-   {
-    model: 'avatar',
-    label: '头像',
-    type: 'image'
-  },
+  //  {
+  //   model: 'avatar',
+  //   label: '头像',
+  //   type: 'image'
+  // },
   {
     model: 'phoneNumber',
     label: '手机号'
@@ -131,6 +133,10 @@ const operateFormLabel = ref([
         value: '女'
       }
     ]
+  },
+  {
+    model: 'intro',
+    label: '个人简介'
   },
   {
     model: 'status',
@@ -184,24 +190,7 @@ const DelUser = (row) => {
       alert("已取消删除。")
     })
 }
-          
-//           // console.log(res.data)//{code: 200, message: '删除成功'}
-//           // @ts-ignore
-//           ElMessage({
-//             type: 'success',
-//             message: '删除成功'
-//           })
-//           getUserInfoData()
-//         })
-//     })
-//     .catch(() => {
-//       // @ts-ignore
-//       ElMessage({
-//         type: 'info',
-//         message: '删除失败'
-//       })
-//     })
-// }
+
 
 //获取子组件传过来的单个用户信息
 const EditUser = (row: Object) => {
@@ -249,10 +238,15 @@ const tableLabel = ref([
     label: '性别'
   },
   {
-    prop: 'avatar',
-    label: '头像',
-    type:"image"
+    prop: 'intro',
+    label: '个人简介'
   },
+
+  // {
+  //   prop: 'avatar',
+  //   label: '头像',
+  //   type:"image"
+  // },
   {
     prop: 'registerTime',
     label: '注册时间'
