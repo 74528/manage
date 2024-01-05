@@ -39,6 +39,7 @@
   import CommonForm from '../../components/CommonForm.vue'
   // @ts-ignore
   import CommonTable from '../../components/CommonTable.vue'
+  import axios from 'axios';
   // 打开新增回复窗口
   const addReply = () => {
     operateForm.value = {} //清空表单
@@ -208,28 +209,32 @@
     label: '内容'  
   },  
   {  
-    prop: 'like_count',  
+    prop: 'likeCount',  
     label: '点赞数'  
   },  
   {  
-    prop: 'dislike_count',  
+    prop: 'dislikeCount',  
     label: '不喜欢数'  
   },  
   {  
-    prop: 'reply_to',  
-    label: '回复至'  
+    prop: 'level',  
+    label: '楼层'  
   },  
   {  
-    prop: 'send_time',  
+    prop: 'replyCount',  
+    label: '回复数'  
+  },  
+  {  
+    prop: 'sendTime',  
     label: '发送时间'  
   },  
   {  
-    prop: 'sender_id',  
+    prop: 'senderId',  
     label: '发送者ID'  
   },  
   {  
-    prop: 'floor_id',  
-    label: '楼层ID'  
+    prop: 'postId',  
+    label: '帖子ID'  
   },  
   {  
     prop: 'status',  
@@ -266,33 +271,46 @@
     CommonForm
   }
   //调用回复测试信息数据
-  const getReplyInfoData = async (id="") => {
-    try {
-      //vue3中函数获取ref({})中的数据
-      config.loading = true
-      // @ts-ignore
-      const response = await axios.get('/replyInfo/getReplyInfoData', {
-        params: { page: config.page.value,id }
-      })
-      // @ts-ignore
-      //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
-      //通过 .value 属性来访问和修改它的值。
-      //asideMenu.value.filter((item) => item.children)
-      //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 lawyerInfo 数组中的每个元素，并为每个元素执行指定的操作。
-     
-      tableData.value = response.data.replyInfo.map((item) => {
-        item.status = item.status === true ? '可用' : '封禁'
-        return item
-      })
-      // 总记录数
-      config.total = response.data.count
-      //设置分页数量，每页显示20条100条就是5页
-      config.count = response.data.replyInfo.length
-      config.loading = false
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  
+const getReplyInfoData = (username) => {
+  let number;
+  if (typeof config.total === 'object' && typeof config.total.value !== 'undefined') {
+    // 如果config.total是对象且有value属性
+    number = config.total.value;
+   } else if (typeof config.total === 'number') {
+    // 如果config.total是数字
+    number = config.total;}
+      
+  console.log(config);
+  const url = username ? 
+      `http://localhost:8080/admin/floor/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
+      `http://localhost:8080/admin/floor/all?pageNum=${config.page.value}&pageSize=${number}`;
+    axios.get(url).then((resp) => {
+        if (resp.data.code === 0) {
+            console.log('success');
+
+            config.loading = true;
+            tableData.value = resp.data.data.map((item) => {
+                // item.status = item.deleted === 0 ? '正常' : '注销';
+                // item.status = item.status === 0 ? '正常' : '禁言';
+                
+                    if (item.status === 0) {
+                        item.status = '正常';
+                    } else {
+                        item.status = '禁言';
+                    }
+                
+                return item;
+            });
+            config.total = resp.data.data.length;
+            config.loading = false;
+            // config.count = 
+        } else {
+            console.log('error');
+        }
+        console.log(resp.data);
+    });
+}
   // 在组件挂载时调用 getLawyerInfoData
   // @ts-ignore
   onMounted(getReplyInfoData)
