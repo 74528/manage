@@ -168,10 +168,7 @@ const DelPost = (row: Object) => {
       // @ts-ignore
     
       // @ts-ignore
-      axios
-        .get('/postInfo/del', {
-          params: { id }
-        })
+      axios.delete(`http://localhost:8080/admin/post/delete?id=${row.id}`)
         .then((res) => {
           if (res.data.code === 0) { 
             alert("注销成功！")
