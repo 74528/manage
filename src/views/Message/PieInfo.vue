@@ -38,12 +38,12 @@
         });  
       },  
       generateMockData() {
-      const userIds = ['用户A', '用户B', '用户C', '用户D', '用户E']; // 定义固定的5个用户ID数组
+      const userIds = ['neroll', 'skyte', 'Kraze', 'Rainfo', 'sky']; // 定义固定的5个用户ID数组
 
       // 按照用户ID数组的顺序，为每个用户生成一个代表活跃度的随机数值
       const dataWithUserIds = userIds.map((userId, index) => ({
         name: userId,
-        value: Math.floor(Math.random() * 91) + 10 // 随机生成10-100的数值（包含10和100）
+        value: Math.floor(Math.random() * 5) + 1 // 随机生成10-100的数值（包含10和100）
       }));
 
       return dataWithUserIds;
