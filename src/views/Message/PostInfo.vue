@@ -152,7 +152,8 @@ const operateFormLabel = ref([
   },
  
 ])
-const DelPost = (row) => {
+// 删除
+const DelPost = (row: Object) => {
   //打印纸组件发送编辑表格事件的行数据
   console.log('C=======>', row.id),
 
@@ -167,7 +168,10 @@ const DelPost = (row) => {
       // @ts-ignore
     
       // @ts-ignore
-        axios.delete(`http://localhost:8080/admin/post/delete?id=${row.id}`)
+      axios
+        .get('/postInfo/del', {
+          params: { id }
+        })
         .then((res) => {
           if (res.data.code === 0) { 
             alert("注销成功！")
@@ -257,19 +261,19 @@ const tableLabel = ref([
     label: '标题'
   },
   {
-    prop: 'send_time',
+    prop: 'sendTime',
     label: '发表时间'
   },
   {
-    prop: 'reply_count',
+    prop: 'replyCount',
     label: '回复数'
   },
   {
-    prop: 'max_level',
+    prop: 'maxLevel',
     label: '最大楼层数'
   },
   {
-    prop: 'last_reply_time',
+    prop: 'lastReplyTime',
     label: '上次回复时间'
   },
   {
@@ -277,7 +281,7 @@ const tableLabel = ref([
     label: '分区'
   },
   {
-    prop: 'sender_id',
+    prop: 'senderId',
     label: '帖主ID'
   } ,
   {
@@ -339,7 +343,7 @@ const getPostInfoData = async () => {
                 item.category = item.category === 0 ? '讨论区' : '专业区'
                 return item;
             });
-            config.total = resp.data.data.length;
+            config.total.value = resp.data.data.length;
             config.loading = false;
             // config.count = 
         } else {

@@ -103,14 +103,14 @@ const handleEdit = (row: object) => {
 //点击删除按钮触发函数
 const handleDelete = (row: object) => {
   //打开浏览器点编辑测试是否可以拿到这行
-  console.log('row=====>', row)
+  console.log('row=====>', row);
   emit('handleDel', row)
 }
 
 //点击页数获取页码
 const changePage = (val: object) => {
   // console.log(val)//可以查看是否获取到val
-  emit('valToParent', { value: val })
+  emit('valToParent', { value: val });
 }
 </script>
 
