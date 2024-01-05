@@ -208,28 +208,28 @@
     label: '内容'  
   },  
   {  
-    prop: 'like_count',  
+    prop: 'likeCount',  
     label: '点赞数'  
   },  
   {  
-    prop: 'dislike_count',  
+    prop: 'dislikeCount',  
     label: '不喜欢数'  
   },  
   {  
-    prop: 'reply_to',  
+    prop: 'postId',  
     label: '回复至'  
   },  
   {  
-    prop: 'send_time',  
+    prop: 'sendTime',  
     label: '发送时间'  
   },  
   {  
-    prop: 'sender_id',  
+    prop: 'senderId',  
     label: '发送者ID'  
   },  
   {  
-    prop: 'floor_id',  
-    label: '楼层ID'  
+    prop: 'level',  
+    label: '楼层号'  
   },  
   {  
     prop: 'status',  
@@ -271,23 +271,21 @@
       //vue3中函数获取ref({})中的数据
       config.loading = true
       // @ts-ignore
-      const response = await axios.get('/replyInfo/getReplyInfoData', {
-        params: { page: config.page.value,id }
-      })
+      const response = await axios.get(`http://localhost:8080/admin/floor/all?pageNum=${config.page.value}&pageSize=40`)
       // @ts-ignore
       //在 Vue 3 中，如果你使用 ref 来定义一个响应式变量，
       //通过 .value 属性来访问和修改它的值。
       //asideMenu.value.filter((item) => item.children)
       //.map((item) => { ... }) 是 JavaScript 中的数组方法，它遍历 lawyerInfo 数组中的每个元素，并为每个元素执行指定的操作。
      
-      tableData.value = response.data.replyInfo.map((item) => {
-        item.status = item.status === true ? '可用' : '封禁'
-        return item
+      tableData.value = response.data.data.map((item) => {
+        item.status = item.status === 0 ? '正常' : '删除'
+        return item;
       })
       // 总记录数
-      config.total = response.data.count
+      config.total = response.data.data.length;
       //设置分页数量，每页显示20条100条就是5页
-      config.count = response.data.replyInfo.length
+      config.count = 40;
       config.loading = false
     } catch (error) {
       console.error(error)
