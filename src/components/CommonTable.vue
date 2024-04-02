@@ -94,7 +94,7 @@ const emit = defineEmits<{
   (event: 'handleDel', val: object): void
 }>()
 //点击编辑按钮触发函数
-const handleEdit = (row: object) => {
+const handleEdit = (row) => {
   //打开浏览器点编辑测试是否可以拿到这行
   // console.log("row=====>",row)
   emit('handleEdit', row)

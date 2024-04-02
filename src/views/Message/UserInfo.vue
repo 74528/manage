@@ -108,8 +108,8 @@ const operateForm = ref({
   // avater:'',
   registerTime:'',
   lastLoginTime:'',
-  status:'',
-  deleted:''
+  status: 0,
+  deleted: 0
 })
 // form表单的标题
 // @ts-ignore
@@ -160,11 +160,11 @@ const operateFormLabel = ref([
     opts: [
       {
         label: '正常',
-        value: '0'
+        value: 0
       },
       {
         label: '封禁',
-        value: '1'
+        value: 1
       }
     ]
   }
@@ -208,7 +208,7 @@ const DelUser = (row) => {
 
 
 //获取子组件传过来的单个用户信息
-const EditUser = (row: Object) => {
+const EditUser = (row) => {
   //打印纸组件发送编辑表格事件的行数据
   // console.log('row=======>', row)
   operateType.value = 'edit'
