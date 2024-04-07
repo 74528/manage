@@ -32,7 +32,7 @@ import {ref} from 'vue';
  */
 
 const port='8080';
-const serverName= `http://localhost:${port}`;
+const serverName= `https://localhost:${port}`;
 const adminLoginUrl = '/admin/login/password';
 
 let admin = ref({
@@ -41,7 +41,7 @@ let admin = ref({
 });
 
   const login = async () => {
-    axios.post(serverName + adminLoginUrl, admin.value).then((response) => {
+    axios.post('/api' + adminLoginUrl, admin.value, {'withCredentials': true}).then((response) => {
   if (response.data.code===0){
     localStorage.setItem('token', response.data.token)
     // index().setMenu(response.data.data.menu)

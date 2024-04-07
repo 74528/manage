@@ -64,7 +64,7 @@ const confirm = async () => {
     // const response = await axios.post('/userInfo/edit', operateForm)
     // console.log('response=====>', response)
 
-    await axios.put('http://localhost:8080/user/update', {
+    await axios.put('https://localhost:8080/user/update', {
         id: operateForm.value.id,
         phoneNumber: operateForm.value.phoneNumber,
         gender: operateForm.value.gender,
@@ -187,7 +187,7 @@ const DelUser = (row) => {
       // @ts-ignore
     
       // @ts-ignore
-        axios.delete(`http://localhost:8080/admin/user/delete?id=${row.id}`)
+        axios.delete(`https://localhost:8080/admin/user/delete?id=${row.id}`)
         .then((res) => {
           if (res.data.code === 0) { 
             alert("注销成功！")
@@ -319,9 +319,11 @@ const getUserInfoData = (username) => {
  
   console.log(config);
   const url = username ? 
-      `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
-      `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${number}`;
-    axios.get(url).then((resp) => {
+     // `http://localhost:8080/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
+    //  `http://localhost:8080/admin/user/all?pageNum=${config.page.value}&pageSize=${number}`;
+    `/api/admin/user/search?username=${encodeURIComponent(username)}&pageNum=${config.page.value}&pageSize=${number}` :
+       `/api/admin/user/all?pageNum=${config.page.value}&pageSize=${number}`;
+    axios.get(url, {'withCredentials': true}).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
 
