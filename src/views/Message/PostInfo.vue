@@ -289,7 +289,7 @@ const getPostInfoData = async () => {
     // 如果config.total是数字
     number = config.total;}
 
-    axios.get(`http://localhost:8080/admin/post/all?pageNum=${config.page.value}&pageSize=${number}`).then((resp) => {
+    axios.get(`/api/admin/post/all?pageNum=${config.page.value}&pageSize=${number}`).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
             config.loading = true;

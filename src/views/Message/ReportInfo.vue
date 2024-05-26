@@ -272,7 +272,7 @@
   }
   // 调用举报测试信息数据
   const getReportInfoData = async () => {
-    axios.get(`http://localhost:8080/admin/report/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
+    axios.get(`/api/admin/report/all?pageNum=${config.page.value}&pageSize=${config.total.value}`).then((resp) => {
         if (resp.data.code === 0) {
             console.log('success');
             config.loading = true;
