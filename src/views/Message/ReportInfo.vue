@@ -90,11 +90,13 @@
   const operateFormLabel = ref([
   {  
     model: 'id',  
-    label: '举报贴Id'  
+    label: '举报贴id',
+    type:'text'  
   },  
   {  
     model: 'reason',  
-    label: '举报原因'  
+    label: '举报原因'  ,
+    type:'text'  
   },  
   {  
     model: 'explain',  
@@ -102,7 +104,8 @@
   },  
   {  
     model: 'reporterId',  
-    label: '举报人id'  
+    label: '举报人id'  ,
+    type:'text'  
   },  
   {  
     model: 'category',  
@@ -125,7 +128,8 @@
   },  
   {  
     model: 'reportTime',  
-    label: '举报时间'  
+    label: '举报时间'  ,
+    type:'date'
   },  
    
   {  
@@ -134,11 +138,11 @@
      type: 'select',
     opts: [
       {
-        label: '可用',
+        label: '未处理',
         value: true
       },
       {
-        label: '封禁',
+        label: '已处理',
         value: false
       }
     ]
