@@ -64,7 +64,7 @@ const confirm = async () => {
     // const response = await axios.post('/userInfo/edit', operateForm)
     // console.log('response=====>', response)
 
-    await axios.put('https://localhost:8080/user/update', {
+    await axios.put('/api/user/update', {
         id: operateForm.value.id,
         phoneNumber: operateForm.value.phoneNumber,
         gender: operateForm.value.gender,
@@ -187,7 +187,7 @@ const DelUser = (row) => {
       // @ts-ignore
     
       // @ts-ignore
-        axios.delete(`https://localhost:8080/admin/user/delete?id=${row.id}`)
+        axios.delete(`/api/admin/user/delete?id=${row.id}`)
         .then((res) => {
           if (res.data.code === 0) { 
             alert("注销成功！")

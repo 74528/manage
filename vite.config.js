@@ -61,10 +61,10 @@ export default defineConfig({
     port: 3000,//自定义端口
     // https: false,// 是否开启 https
     // https: true,// 是否开启 https
-    https: {
-        cert: fs.readFileSync(path.join(__dirname, 'src/ssl/cert.crt')),
-        key: fs.readFileSync(path.join(__dirname, 'src/ssl/cert.key'))
-    },
+    // https: {
+    //     cert: fs.readFileSync(path.join(__dirname, 'src/ssl/cert.crt')),
+    //     key: fs.readFileSync(path.join(__dirname, 'src/ssl/cert.key'))
+    // },
     open:true,//配置自动启动浏览器  open: 'Google Chrome'-默认启动谷歌
     proxy: {
         '^/api': {
