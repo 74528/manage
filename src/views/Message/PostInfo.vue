@@ -91,28 +91,29 @@ const operateForm = ref({
 const operateFormLabel = ref([
 {
     model: 'id',
-    label: '标题'
+    label: 'id',
+    type:'text'
   },
   {
     model: 'title',
-    label: '帖名'
+    label: '标题'
   },
   {
-    model: 'send_time',
+    model: 'sendTime',
     label: '发表时间',
     type: 'date'
   },
   {
-    model: 'reply_count',
+    model: 'replyCount',
     label: '回复数'
   },
    
   {
-    model: 'max_level',
+    model: 'maxLevel',
     label: '最大楼层数'
   },
   {
-    model: 'last_reply_time',
+    model: 'lastReplyTime',
     label: '上次回复时间',
     type: 'date'
   },
@@ -132,8 +133,9 @@ const operateFormLabel = ref([
     ]
   },
   {
-    model: 'sender_id',
+    model: 'senderId',
     label: '帖主ID',
+    type:'text'
   }, 
   {
     model: 'status',
@@ -141,11 +143,11 @@ const operateFormLabel = ref([
     type: 'select',
     opts: [
       {
-        label: '可用',
+        label: '正常',
         value: 0
       },
       {
-        label: '封禁',
+        label: '删除',
         value: 1
       }
     ]

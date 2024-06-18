@@ -2,7 +2,7 @@
 <!-- 依赖于从父组件传递下来的数据（如 formLabel）来动态生成表单项。这个子组件可以插入到任何父组件中，并根据父组件传递的数据来展示不同的表单元素 -->
 <template>
   <!-- 具有动态生成的字段，这些字段的类型（如输入框、下拉框、开关、日期选择器或图片上传），根据传入的配置生成不同类型的输入控件 -->
-  <el-form :inline="inline" :model="form" ref="form" label-width="100px">
+  <el-form :inline="inline" :model="form" ref="form" label-width="100px" style="width:90%;">
     <!-- 为每个元素创建一个表单项。每个表单项都有一个键（item.model）和标签（item.label） -->
     <el-form-item v-for="item in formLabel" :key="item.model" :label="item.label">
       <!-- item.type 的值决定显示哪种输入控件 -->
@@ -20,6 +20,7 @@
         :readonly="true"
         v-if="item.type==='text'"
         class="no-border-input"
+        disabled 
       ></el-input>
       <!-- 下拉框 -->
       <el-select v-model="form[item.model]" placeholder="请选择" v-if="item.type === 'select'">
@@ -38,6 +39,7 @@
         value-format="YYYY-MM-DD"
         v-if="item.type === 'date'"
         placeholder="选择日期"
+        disabled
       />
       <!-- 图片 -->
       <el-upload
