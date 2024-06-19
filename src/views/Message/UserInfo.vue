@@ -64,12 +64,14 @@ const confirm = async () => {
     // const response = await axios.post('/userInfo/edit', operateForm)
     // console.log('response=====>', response)
 
+    let istatus = operateForm.value.status == '正常' ? 0 : 1;
+
     await axios.put('/api/user/update', {
         id: operateForm.value.id,
         phoneNumber: operateForm.value.phoneNumber,
         gender: operateForm.value.gender,
         intro: operateForm.value.intro,
-        status: operateForm.value.status
+        status: istatus
     }).then((resp) => {
         if (resp.data.code === 0) {
             console.log('succes');
